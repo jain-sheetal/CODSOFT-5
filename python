@@ -1,0 +1,116 @@
+# Contact Management System
+
+contacts = []  # List to store contact details
+
+
+# Function to add a new contact
+def add_contact():
+    print("\nAdd New Contact")
+    name = input("Enter Name: ").strip()
+    phone = input("Enter Phone Number: ").strip()
+    email = input("Enter Email: ").strip()
+    address = input("Enter Address: ").strip()
+
+    contacts.append({
+        "name": name,
+        "phone": phone,
+        "email": email,
+        "address": address
+    })
+    print(f"Contact for {name} added successfully!\n")
+
+
+# Function to view all contacts
+def view_contacts():
+    if not contacts:
+        print("\nNo contacts available!\n")
+        return
+
+    print("\nContact List:")
+    for idx, contact in enumerate(contacts, start=1):
+        print(f"{idx}. {contact['name']} - {contact['phone']}")
+    print()
+
+
+# Function to search for a contact by name or phone number
+def search_contact():
+    print("\nSearch Contact")
+    query = input("Enter Name or Phone Number to search: ").strip().lower()
+
+    results = [contact for contact in contacts if query in contact['name'].lower() or query in contact['phone']]
+    if results:
+        print("\nSearch Results:")
+        for contact in results:
+            print(f"Name: {contact['name']}")
+            print(f"Phone: {contact['phone']}")
+            print(f"Email: {contact['email']}")
+            print(f"Address: {contact['address']}")
+            print("-" * 20)
+    else:
+        print("No matching contacts found!\n")
+
+
+# Function to update an existing contact
+def update_contact():
+    print("\nUpdate Contact")
+    query = input("Enter Name or Phone Number to update: ").strip().lower()
+
+    for contact in contacts:
+        if query in contact['name'].lower() or query in contact['phone']:
+            print(f"Updating contact for {contact['name']}...")
+            contact['name'] = input(f"Enter new Name (current: {contact['name']}): ").strip() or contact['name']
+            contact['phone'] = input(f"Enter new Phone (current: {contact['phone']}): ").strip() or contact['phone']
+            contact['email'] = input(f"Enter new Email (current: {contact['email']}): ").strip() or contact['email']
+            contact['address'] = input(f"Enter new Address (current: {contact['address']}): ").strip() or contact['address']
+            print(f"Contact for {contact['name']} updated successfully!\n")
+            return
+
+    print("No matching contact found to update!\n")
+
+
+# Function to delete a contact
+def delete_contact():
+    print("\nDelete Contact")
+    query = input("Enter Name or Phone Number to delete: ").strip().lower()
+
+    for contact in contacts:
+        if query in contact['name'].lower() or query in contact['phone']:
+            contacts.remove(contact)
+            print(f"Contact for {contact['name']} deleted successfully!\n")
+            return
+
+    print("No matching contact found to delete!\n")
+
+
+# Main menu
+def main():
+    while True:
+        print("\nContact Management System")
+        print("1. Add Contact")
+        print("2. View Contact List")
+        print("3. Search Contact")
+        print("4. Update Contact")
+        print("5. Delete Contact")
+        print("6. Exit")
+
+        choice = input("Enter your choice: ").strip()
+
+        if choice == "1":
+            add_contact()
+        elif choice == "2":
+            view_contacts()
+        elif choice == "3":
+            search_contact()
+        elif choice == "4":
+            update_contact()
+        elif choice == "5":
+            delete_contact()
+        elif choice == "6":
+            print("Exiting the Contact Management System. Goodbye!")
+            break
+        else:
+            print("Invalid choice! Please select a valid option.\n")
+
+
+if __name__ == "__main__":
+    main()
